@@ -1,0 +1,90 @@
+.TitleBar{
+  padding-top: 1%;
+  font-family: 'Franklin Gothic Medium';
+  display: flex;
+  color: #f0ad4e;
+  justify-content: space-around;
+  background: rgba(74, 5, 1, 0.547);
+  font-family: 'Syne Mono', monospace;
+}
+.buttonBox{
+  width: 30%;
+  display: inline;
+  margin-top: 2px;
+}
+.login{
+ margin-left: 25px; 
+}
+/* .signin{
+  padding-right: 10px;
+} */
+body{
+  font-family: 'Syne Mono', monospace;
+  background-image: url('C:\Users\samya\OneDrive\Desktop\React apps\Journally\journally\public\images\purty-wood.png');
+  background-color: #390502;
+}
+.IntroBox{
+  border: #390502 2px solid;
+  border-radius: 5%;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 5%;
+  background-color: #ebe1e171;
+}
+.IntroImage{
+  border-radius: 20%;
+  width: 40%;
+  height: 30%;
+  align-self: center;
+  margin: 2%;
+}
+.IntroPara{
+  /* background-color: #cdaca91a; */
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: 2%;
+  height: 50%;
+  width: 50%;
+}
+.TextWriting{
+  margin-top: 5%;
+  margin-right: 20%;
+  height: 400px;
+  margin-left: 25%;
+  /* background-image: url('C:\Users\samya\OneDrive\Desktop\React apps\online-journal\public\images\page.png'); */
+}
+.WritingPage{
+  height: 100%;
+  width: 100%;
+}
+.TextArea{
+  margin-top: 5%;
+}
+.submit{
+  margin-top: 5%;
+}
+.Gratitude{
+  color: rgb(227, 227, 174);
+  /* color: #f0ad4e; */
+}
+.NotesItem{
+  display: flex;
+  justify-content: space-around;
+  color: rgb(227, 227, 174);
+  background-color: #0704047c;
+}
+.NoteListContainer{
+  margin-left: 10%;
+  margin-top: 5%;
+  width: 80%;
+  height: 80%;
+}
+.LinkFormat{
+  text-decoration: none;
+  color: inherit;
+}
