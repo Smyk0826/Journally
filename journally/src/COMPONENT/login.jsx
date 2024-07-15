@@ -1,12 +1,14 @@
-import react, { useState } from "react";
+import react, { useState, useContext } from "react";
 import Title from "./Title";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { nameContext } from "../context/context";
 
 function Login_page(){
 const navigate = useNavigate();
 const [loginPass, setLoginPass] = useState('');
 const [loginID,setLoginID] = useState('');
+const value = useContext(nameContext);
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ const handleSubmit = async (e) => {
         });
         console.log(response.data);
         if (response.data.success) {
+            value.setName(response.data.userName);
             navigate('/profile'); // Redirect to the dashboard page
           } else {
             alert('Login failed!');

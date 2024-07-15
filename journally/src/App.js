@@ -12,6 +12,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { nameContext } from './context/context';
+
+
 
 function App() {
   const [name, setName] = useState('');
@@ -22,6 +25,7 @@ function App() {
       .then(data => setName(data.name));
   }, [])
   return (
+    <nameContext.Provider value={{name, setName}}>
     <Router>
     <div className="App">
       <Routes>
@@ -29,10 +33,11 @@ function App() {
         <Route exact path="/Login" element={<Login/>}/>
         <Route exact path="/signin" element={<SignIn/>}/>
         <Route exact path="/notebook" element={<Notebook/>}/>
-        <Route exact path="/profile" element={<Profile name={name}/>}/>
+        <Route exact path="/profile" element={<Profile/>}/>
         </Routes>
     </div>
     </Router>
+    </nameContext.Provider>
   );
 }
 
