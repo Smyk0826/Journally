@@ -88,3 +88,27 @@ body{
   text-decoration: none;
   color: inherit;
 }
+.popup{
+  position:fixed;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top:-35px;
+}
+.popup-inner{
+  position: relative;
+  padding: 32px;
+  width: 100%;
+  max-width: 640px;
+  background-color: #fbf2eae7;
+  border: 2px;
+  border-style: groove;
+  border-radius: 2%;
+}
+.popup-inner .close-btn{
+  position :absolute;
+  top: 16px;
+  right: 16px;
+}

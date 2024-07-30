@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 const port = 3001;
 // var RegUsername = '' , regEmail = '', regPass = '';
-// var logUsrname = '', logEmail = '', logPass = '';
+ //var logUsrname = '', logEmail = '', logPass = '';
 const uri = "mongodb+srv://samyakjain0826:samyak@cluster1.ew3syhw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -28,10 +28,10 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 app.get('/', (req, res) => {
-    console.log('logUsrname is -', logUsrname);
-    res.send({
-        name: logUsrname
-    })
+    // console.log('logUsrname is -', logUsrname);
+    // res.send({
+    //     name: logUsrname
+    // })
 })
 
 app.post('/signin',async (req, res) => {
@@ -40,23 +40,30 @@ app.post('/signin',async (req, res) => {
     const RegUsername = username;
     const regEmail = email;
     const regPass = password;
-    const newUser = new User({ username, email, password });
-    try {
-        await newUser.save();
-        res.status(201).send('User registered');
-        console.log("registered");
-    } catch (err) {
-        res.status(500).send('Error registering user');
+    if(username.length===0 || email.length ===0 || password.length === 0)  return res.status(402).send('Error registering user');
+    const query = {email:regEmail};
+    const record = await User.findOne(query).exec();
+    console.log("record"+record);
+    if(record==null){
+        const newUser = new User({ username, email, password });
+        try {
+            await newUser.save();
+            res.status(201).send('User registered');
+        } catch (err) {
+            res.status(500).send('Error registering user');
+        }
     }
+    else{
+        return res.status(401).json({success: false, message: 'Invalid email or password' });
+    }
+    
 });
 
 app.post('/Login',async (req, res)=>{
-    console.log('req is',req.body);
     const credentials = req.body;
     console.log('credentials', credentials);
     const query = {email:credentials.loginID};
     const record = await User.findOne(query).exec();
-    console.log('record - ', record);
     if(record != null){
         const logEmail = record.email;
         const logPass = record.password;
@@ -76,41 +83,8 @@ app.post('/Login',async (req, res)=>{
     }
 });
 
-app.get('/profile', async (req,res) => {
-    // console.log("req.body is"+logEmail);
-    // var Usremail = logEmail;
-    // const query = {email:Usremail};
-    // const record = await User.findOne(query).exec();
-    // var userName = "";
-    // if(record!=null){
-    //     console.log("record"+record)
-    //     userName = record.username;
-    //     Usremail = "";
-    //     //res.status(200).json({ success: true, message: 'Found user details' });
-    //     res.send({
-    //         name: userName
-    //     })
-    // }
-    // else{
-    //     res.status(401).json({ success: false, message: 'Not found user details' });
-    //     console.log('invalid email')
-    // }
-        
+app.get('/profile', async (req,res) => {     
 })
-// app.post('/profile', async (req,res)=>{
-//     const{email} = req.body;
-//     try{
-//          const record = await User.findOne(email).exec();
-//          if(record!=null){
-//             console.log('found user'+record)
-//             res.status(200).json({ success: true, message: 'user details found', username: record.username });
-//          }
-//          else  res.status(401).json({ success: false, message: 'USER DETAILS NOT FOUND' });
-//     }
-//     catch{
-//         console.log('not able to find user')
-//     }
-// })
 
 
 app.listen(port, () => {

@@ -1,24 +1,40 @@
 import react, { useState } from "react";
 import Title from "./Title";
 import axios from "axios";
+import Popup from "./popup";
 
 function SignInPage(){
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const [popuptrigger, setpopupTrigger] = useState(false);
+    const [errMess, seterrMess] = useState('');
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:3001/signin', {
+            axios.post('http://localhost:3001/signin', {
                 username,
                 email,
                 password,
-            });
-            console.log(response.data);
-        } catch (error) {
-            console.error('There was an error registering!', error);
-        }
+            }).then(response => {
+                seterrMess('Account succesfully registered');
+                setpopupTrigger(true);
+                console.log('Status Code:', response.status);
+              })
+              .catch(error => {
+                if (error.response.status === 401) {
+                  seterrMess('Email already registered with other account');
+                  setpopupTrigger(true);
+                  console.log('Error Status Code:', error.response.status);
+                }
+                else if(error.response.status === 402){
+                    seterrMess('All fields are mandatory');
+                    setpopupTrigger(true);
+                }
+                else{
+                    seterrMess('There was a issue while registering account');
+                    setpopupTrigger(true);
+                } 
+              });
     };
 return(
     <div>
@@ -47,6 +63,9 @@ return(
             </div>
             <button type="submit" className="submit btn btn-dark">Sign In</button>
             </div>
+            <Popup trigger={popuptrigger} setTrigger = {setpopupTrigger}>
+                <h3>{errMess}</h3>
+            </Popup>
             </form>
         </div>
     </div>
